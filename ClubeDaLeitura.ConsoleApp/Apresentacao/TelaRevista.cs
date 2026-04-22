@@ -1,36 +1,19 @@
-using System;
 using ClubeDaLeitura.ConsoleApp.Dominio;
 using ClubeDaLeitura.ConsoleApp.Infraestrutura;
 
 namespace ClubeDaLeitura.ConsoleApp.Apresentacao;
 
-public class TelaRevista
+public class TelaRevista : TelaBase
 {
     private RepositorioRevista RepositorioRevista;
     private RepositorioCaixa RepositorioCaixa;
 
-    public TelaRevista(RepositorioCaixa rc, RepositorioRevista rv)
+    public TelaRevista(RepositorioCaixa rc, RepositorioRevista rv) : base("Revista")
     {
         RepositorioCaixa = rc;
         RepositorioRevista = rv;
     }
-    public string ObterOpcaoMenu()
-    {
-        Console.Clear();
-        Console.WriteLine("---------------------------------");
-        Console.WriteLine("Gestão de Revista");
-        Console.WriteLine("---------------------------------");
-        Console.WriteLine("1 - Cadastrar Revista");
-        Console.WriteLine("2 - Editar Revista");
-        Console.WriteLine("3 - Excluir Revista");
-        Console.WriteLine("4 - Visualizar Revista");
-        Console.WriteLine("S - Voltar para o início");
-        Console.WriteLine("---------------------------------");
-        Console.Write("> ");
-        string? opcaoMenu = Console.ReadLine()?.ToUpper();
 
-        return opcaoMenu;
-    }
     public void Cadastrar()
     {
         ExibirCabecalho("Cadastro de Revista");
@@ -105,7 +88,7 @@ public class TelaRevista
 
         do
         {
-            Console.Write("Digite o ID do registro que deseja excluir: ");
+            Console.Write("Digite o ID do registro : ");
             idSelecionado = Console.ReadLine();
 
             if (!string.IsNullOrWhiteSpace(idSelecionado) && idSelecionado.Length == 7)
@@ -154,23 +137,6 @@ public class TelaRevista
         }
     }
 
-    private void ExibirCabecalho(string titulo)
-    {
-        Console.Clear();
-        Console.WriteLine("---------------------------------");
-        Console.WriteLine("Gestão de Revistas");
-        Console.WriteLine("---------------------------------");
-        Console.WriteLine(titulo);
-        Console.WriteLine("---------------------------------");
-    }
 
-    private static void ExibirMensagem(string mensagem)
-    {
-        Console.WriteLine("---------------------------------");
-        Console.WriteLine(mensagem);
-        Console.WriteLine("---------------------------------");
-        Console.Write("Digite ENTER para continuar...");
-        Console.ReadLine();
-    }
 
 }
