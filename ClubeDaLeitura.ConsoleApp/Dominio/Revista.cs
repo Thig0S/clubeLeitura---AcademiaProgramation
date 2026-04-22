@@ -1,5 +1,7 @@
 
 
+using ClubeDaLeitura.ConsoleApp.Dominio.Base;
+
 namespace ClubeDaLeitura.ConsoleApp.Dominio;
 
 public class Revista : EntidadeBase

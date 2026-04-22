@@ -1,4 +1,6 @@
 
+using ClubeDaLeitura.ConsoleApp.Dominio.Base;
+
 namespace ClubeDaLeitura.ConsoleApp.Dominio;
 
 public class Caixa : EntidadeBase
@@ -39,9 +41,9 @@ public class Caixa : EntidadeBase
     public override void AtualizarRegistro(EntidadeBase entidadeAtualizada)
     {
         Caixa caixaAtualizada = (Caixa)entidadeAtualizada;
-            Etiqueta = caixaAtualizada.Etiqueta;
-            Cor = caixaAtualizada.Cor;
-            DiasDeEmprestimo = caixaAtualizada.DiasDeEmprestimo;
-        
+        Etiqueta = caixaAtualizada.Etiqueta;
+        Cor = caixaAtualizada.Cor;
+        DiasDeEmprestimo = caixaAtualizada.DiasDeEmprestimo;
+
     }
-} 
+}
