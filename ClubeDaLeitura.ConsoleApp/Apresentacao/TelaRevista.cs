@@ -6,11 +6,13 @@ namespace ClubeDaLeitura.ConsoleApp.Apresentacao;
 
 public class TelaRevista
 {
+    private RepositorioRevista RepositorioRevista;
     private RepositorioCaixa RepositorioCaixa;
 
-    public TelaRevista(RepositorioCaixa rc)
+    public TelaRevista(RepositorioCaixa rc, RepositorioRevista rv)
     {
         RepositorioCaixa = rc;
+        RepositorioRevista = rv;
     }
     public string ObterOpcaoMenu()
     {
@@ -52,9 +54,11 @@ public class TelaRevista
             Console.ResetColor();
 
             Cadastrar();
-
             return;
         }
+        RepositorioRevista.Cadastrar(novaRevista);
+
+        ExibirMensagem("Revista cadastrada com sucesso!");
     }
 
     private Revista ObterDadosCadastrais()
@@ -120,7 +124,34 @@ public class TelaRevista
     }
     public void VisualizarTodos(bool deveExibirCabecalho)
     {
+        if (deveExibirCabecalho)
+            ExibirCabecalho("Visualização de Caixas");
 
+        Console.WriteLine(
+            "{0, -7} | {1, -25} | {2, -6} | {3, -4} | {4, -20}",
+            "Id", "Titulo", "Numero da Edição", "Ano de Publicação", "Caixa"
+        );
+
+        Revista?[] revistas = RepositorioRevista.SelecionarTodas();
+
+        for (int i = 0; i < revistas.Length; i++)
+        {
+            Revista? r = revistas[i];
+
+            if (r == null)
+                continue;
+
+            Console.WriteLine(
+                "{0, -7} | {1, -25} | {2, -6} | {3, -4} | {4, -20}",
+                r.Id, r.Titulo, r.NumeroEdicao, r.AnoPublicacao, r.Caixa.Etiqueta
+            );
+        }
+        if (deveExibirCabecalho)
+        {
+            Console.WriteLine("---------------------------------");
+            Console.WriteLine("Digite ENTER para continuar...");
+            Console.ReadLine();
+        }
     }
 
     private void ExibirCabecalho(string titulo)

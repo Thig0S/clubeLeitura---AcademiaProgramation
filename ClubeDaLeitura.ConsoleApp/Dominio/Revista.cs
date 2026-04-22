@@ -48,4 +48,12 @@ public class Revista
 
 
     }
+
+    internal void AtualizarRegistro(Revista novaRevista)
+    {
+        Titulo = novaRevista.Titulo;
+        NumeroEdicao = novaRevista.NumeroEdicao;
+        AnoPublicacao = novaRevista.AnoPublicacao;
+        Caixa = novaRevista.Caixa;
+    }
 }

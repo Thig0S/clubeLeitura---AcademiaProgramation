@@ -6,11 +6,15 @@ using ClubeDaLeitura.ConsoleApp.Infraestrutura;
 RepositorioCaixa repositorioCaixa = new RepositorioCaixa();
 
 TelaCaixa telaCaixa = new TelaCaixa(repositorioCaixa);
+RepositorioRevista repositorioRevista = new RepositorioRevista();
 
 Caixa caixa = new Caixa("Lançamentos", "Vermelho", 3);
 repositorioCaixa.Cadastrar(caixa);
 
-TelaRevista telaRevista = new TelaRevista(repositorioCaixa);
+TelaRevista telaRevista = new TelaRevista(repositorioCaixa, repositorioRevista);
+
+Revista revista = new Revista("Revista Super Interessante", 1, 2024, caixa);
+repositorioRevista.Cadastrar(revista);
 
 while (true)
 {
