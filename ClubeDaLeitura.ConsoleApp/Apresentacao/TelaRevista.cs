@@ -8,7 +8,7 @@ public class TelaRevista : TelaBase
     private RepositorioRevista RepositorioRevista;
     private RepositorioCaixa RepositorioCaixa;
 
-    public TelaRevista(RepositorioCaixa rc, RepositorioRevista rv) : base("Revista")
+    public TelaRevista(RepositorioCaixa rc, RepositorioRevista rv) : base("Revista", rv)
     {
         RepositorioCaixa = rc;
         RepositorioRevista = rv;
@@ -18,7 +18,7 @@ public class TelaRevista : TelaBase
     {
         ExibirCabecalho("Cadastro de Revista");
 
-        Revista novaRevista = ObterDadosCadastrais();
+        EntidadeBase? novaRevista = ObterDadosCadastrais();
 
         string?[] erros = novaRevista.Validar();
 
@@ -44,7 +44,7 @@ public class TelaRevista : TelaBase
         ExibirMensagem("Revista cadastrada com sucesso!");
     }
 
-    private Revista ObterDadosCadastrais()
+    protected override EntidadeBase ObterDadosCadastrais()
     {
         System.Console.Write("Digite o Titulo da revista: ");
         string? titulo = Console.ReadLine();
@@ -97,15 +97,8 @@ public class TelaRevista : TelaBase
 
         return idSelecionado;
     }
-    public void Editar()
-    {
-
-    }
-    public void Excluir()
-    {
-
-    }
-    public void VisualizarTodos(bool deveExibirCabecalho)
+    
+    public override void VisualizarTodos(bool deveExibirCabecalho)
     {
         if (deveExibirCabecalho)
             ExibirCabecalho("Visualização de Caixas");
