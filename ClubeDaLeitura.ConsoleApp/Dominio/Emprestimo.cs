@@ -21,6 +21,13 @@ public class Emprestimo
             return Conclusao;
         }
     }
+    public bool EstaAtrasado
+    {
+        get
+        {
+            return Status == StatusEmprestimo.Aberto && DateTime.Now > ConclusaoPrevista;
+        }
+    }
     public StatusEmprestimo Status { get; set; } = StatusEmprestimo.Indefinido;
     public Emprestimo(Revista revista, Amigo amigo)
     {
