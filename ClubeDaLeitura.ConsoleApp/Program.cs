@@ -24,7 +24,6 @@ repositorioAmigo.Cadastrar(amigo);
 
 Emprestimo emprestimo = new(revista, amigo);
 emprestimo.Abrir();
-emprestimo.Abertura = DateTime.Now.AddDays(-5);
 repositorioEmprestimo.Cadastrar(emprestimo);
 
 
@@ -135,6 +134,10 @@ while (true)
 
             if (opcaoMenuInterno == "1")
                 telaEmprestimo.Abrir();
+
+            else if (opcaoMenuInterno == "2")
+                telaEmprestimo.Concluir();
+
             else if (opcaoMenuInterno == "3")
                 telaEmprestimo.VisualizarTodos(deveExibirCabecalho: true);
         }

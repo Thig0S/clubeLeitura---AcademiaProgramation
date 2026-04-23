@@ -24,4 +24,26 @@ public class RepositorioEmprestimo
     {
         return Emprestimos;
     }
+
+    public Emprestimo? SelecionarPorId(string idSelecionado)
+    {
+        {
+            Emprestimo? registroselecionada = null;
+
+            for (int i = 0; i < Emprestimos.Length; i++)
+            {
+                Emprestimo? c = Emprestimos[i];
+
+                if (c == null)
+                    continue;
+
+                if (c.Id == idSelecionado)
+                {
+                    registroselecionada = Emprestimos[i];
+                    return registroselecionada;
+                }
+            }
+            return null;
+        }
+    }
 }

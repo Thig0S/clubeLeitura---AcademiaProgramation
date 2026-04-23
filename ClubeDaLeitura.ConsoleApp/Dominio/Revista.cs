@@ -10,7 +10,7 @@ public class Revista : EntidadeBase
     public int NumeroEdicao { get; set; }
     public int AnoPublicacao { get; set; }
     public Caixa Caixa { get; set; }
-    public StatusRevista Status { get; set; }
+    public StatusRevista Status { get; set; } = StatusRevista.Disponivel;
     public Revista(string titulo, int numeroEdicao, int anoPublicacao, Caixa caixa)
     {
         Titulo = titulo;
@@ -58,5 +58,10 @@ public class Revista : EntidadeBase
     public void Emprestar()
     {
         Status = StatusRevista.Emprestada;
+    }
+
+    public void Devolver()
+    {
+        Status = StatusRevista.Disponivel;
     }
 }

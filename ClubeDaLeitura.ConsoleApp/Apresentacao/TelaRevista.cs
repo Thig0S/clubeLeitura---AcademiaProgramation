@@ -106,8 +106,8 @@ public class TelaRevista : TelaBase
             ExibirCabecalho("Visualização de Caixas");
 
         Console.WriteLine(
-            "{0, -7} | {1, -25} | {2, -6} | {3, -4} | {4, -20}",
-            "Id", "Titulo", "Numero da Edição", "Ano de Publicação", "Caixa"
+            "{0, -7} | {1, -25} | {2, -6} | {3, -4} | {4, -15} | {5, -10}",
+            "Id", "Titulo", "Numero da Edição", "Ano de Publicação", "Caixa", "Status"
         );
 
         EntidadeBase?[] revistas = RepositorioRevista.SelecionarTodas();
@@ -120,8 +120,8 @@ public class TelaRevista : TelaBase
                 continue;
 
             Console.WriteLine(
-                "{0, -7} | {1, -25} | {2, -6} | {3, -4} | {4, -20}",
-                r.Id, r.Titulo, r.NumeroEdicao, r.AnoPublicacao, r.Caixa.Etiqueta
+                "{0, -7} | {1, -25} | {2, -6} | {3, -4} | {4, -15} | {5, -10}",
+                r.Id, r.Titulo, r.NumeroEdicao, r.AnoPublicacao, r.Caixa.Etiqueta, r.Status.ToString()
             );
         }
         if (deveExibirCabecalho)

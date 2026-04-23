@@ -69,6 +69,52 @@ public class TelaEmprestimo
         //4. armazenar essa porra
         repositorioEmprestimo.Cadastrar(emprestimo);
     }
+
+    public void Concluir()
+    {
+        ExibirCabecalho("Conclusao de Emprestimo");
+
+        VisualizarTodos(false);
+
+        Emprestimo? e = null;
+        do
+        {
+            Console.Write("Digite o ID do Emprestimo que deseja concluir: ");
+            string idSelecionado = Console.ReadLine();
+
+            if (!string.IsNullOrWhiteSpace(idSelecionado) && idSelecionado.Length == 7)
+            {
+                e = repositorioEmprestimo.SelecionarPorId(idSelecionado);
+                break;
+            }
+        } while (e == null);
+
+        Console.WriteLine("---------------------------------");
+        Console.WriteLine(
+            "{0, -7} | {1, -15} | {2, -10} | {3, -10} | {4, -10}",
+            "Id", "Revista", "Amigo", "Inicio", "Conclusao prev"
+        );
+        Console.WriteLine(
+                   "{0, -7} | {1, -15} | {2, -10} | {3, -10} | {4, -10}",
+                   e.Id, e.Revista.Titulo, e.Amigo.Nome, e.Abertura.ToShortDateString(), e.ConclusaoPrevista.ToShortDateString()
+               );
+        Console.WriteLine("---------------------------------");
+        System.Console.Write("Deseja concluir o emprestimo selecionado? (s/n)");
+        string? opcaoContinuar = Console.ReadLine()?.ToUpper();
+
+        if (opcaoContinuar != "S")
+        {
+            System.Console.WriteLine("-----------------------");
+            System.Console.WriteLine("Digite ENTER para continuar!");
+            Console.ReadLine();
+            Console.Clear();
+            return;
+        }
+
+        e.Concluir();
+
+        ExibirMensagem($"O emprestimo {e.Id} foi concluido com sucesso!");
+    }
     public void VisualizarTodos(bool deveExibirCabecalho)
     {
         if (deveExibirCabecalho)
@@ -109,7 +155,7 @@ public class TelaEmprestimo
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
             }
-            else if (a.Status == StatusEmprestimo.Aberto)
+            else if (a.Status == StatusEmprestimo.Concluido)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
             }
@@ -210,7 +256,6 @@ public class TelaEmprestimo
         }
         Console.WriteLine("---------------------------------");
     }
-
     private void ExibirCabecalho(string titulo)
     {
         Console.Clear();
@@ -219,5 +264,13 @@ public class TelaEmprestimo
         Console.WriteLine("---------------------------------");
         Console.WriteLine(titulo);
         Console.WriteLine("---------------------------------");
+    }
+    private static void ExibirMensagem(string mensagem)
+    {
+        Console.WriteLine("---------------------------------");
+        Console.WriteLine(mensagem);
+        Console.WriteLine("---------------------------------");
+        Console.Write("Digite ENTER para continuar...");
+        Console.ReadLine();
     }
 }

@@ -63,4 +63,10 @@ public class Emprestimo
 
         Amigo.AdicionarEmprestimo(this);
     }
+
+    public void Concluir()
+    {
+        Revista.Devolver();
+        Status = StatusEmprestimo.Concluido;
+    }
 }
