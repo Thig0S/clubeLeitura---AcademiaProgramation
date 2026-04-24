@@ -1,5 +1,6 @@
 ﻿
 using ClubeDaLeitura.ConsoleApp.Apresentacao;
+using ClubeDaLeitura.ConsoleApp.Apresentacao.Base;
 using ClubeDaLeitura.ConsoleApp.Dominio;
 using ClubeDaLeitura.ConsoleApp.Infraestrutura;
 
@@ -9,129 +10,48 @@ RepositorioAmigo repositorioAmigo = new RepositorioAmigo();
 RepositorioEmprestimo repositorioEmprestimo = new RepositorioEmprestimo();
 
 
-
-TelaCaixa telaCaixa = new TelaCaixa(repositorioCaixa);
-TelaRevista telaRevista = new TelaRevista(repositorioCaixa, repositorioRevista);
-TelaEmprestimo telaEmprestimo = new TelaEmprestimo(repositorioEmprestimo, repositorioRevista, repositorioAmigo: repositorioAmigo);
-TelaAmigo telaAmigo = new TelaAmigo(repositorioAmigo);
-
-Caixa caixa = new Caixa("Lançamentos", "Vermelho", 3);
-repositorioCaixa.Cadastrar(caixa);
-Amigo amigo = new Amigo("João", "Maria", "49999999999");
-Revista revista = new Revista("Revista Super Interessante", 1, 2024, caixa);
-repositorioRevista.Cadastrar(revista);
-repositorioAmigo.Cadastrar(amigo);
-
-Emprestimo emprestimo = new(revista, amigo);
-emprestimo.Abrir();
-repositorioEmprestimo.Cadastrar(emprestimo);
-
-
+TelaPrincipal telaPrincipal = new(repositorioCaixa, repositorioRevista, repositorioAmigo, repositorioEmprestimo);
 
 while (true)
 {
-    Console.Clear();
-    Console.WriteLine("---------------------------------");
-    Console.WriteLine("Clube da Leitura");
-    Console.WriteLine("---------------------------------");
-    Console.WriteLine("1 - Gerenciar caixas de revistas");
-    Console.WriteLine("2 - Gerenciar revistas");
-    Console.WriteLine("3 - Gerenciar amigos");
-    Console.WriteLine("4 - Gerenciar empréstimos");
-    Console.WriteLine("S - Sair");
-    Console.WriteLine("---------------------------------");
-    Console.Write("> ");
-    string? opcaoMenuPrincipal = Console.ReadLine()?.ToUpper();
+    ITela? telaSelecionada = telaPrincipal.ApresentarMenuOpcoesPrincipal();
 
-    if (opcaoMenuPrincipal == "S")
-    {
-        Console.Clear();
+    if (telaSelecionada == null)
         break;
-    }
 
     while (true)
     {
-        string? opcaoMenuInterno = string.Empty;
+        string? opcaoMenuInterno = telaSelecionada.ObterOpcaoMenu();
 
-        if (opcaoMenuPrincipal == "1") // Caixas
+        if (opcaoMenuInterno == "S")
+            break;
+
+        if (telaSelecionada is TelaBase)
         {
-            opcaoMenuInterno = telaCaixa.ObterOpcaoMenu();
-
-            if (opcaoMenuInterno == "S")
-            {
-                Console.Clear();
-                break;
-            }
+            TelaBase telaBase = (TelaBase)telaSelecionada;
 
             if (opcaoMenuInterno == "1")
-                telaCaixa.Cadastrar();
+                telaBase.Cadastrar();
 
             else if (opcaoMenuInterno == "2")
-                telaCaixa.Editar();
+                telaBase.Editar();
 
             else if (opcaoMenuInterno == "3")
-                telaCaixa.Excluir();
+                telaBase.Excluir();
 
             else if (opcaoMenuInterno == "4")
-                telaCaixa.VisualizarTodos(deveExibirCabecalho: true);
+                telaBase.VisualizarTodos(deveExibirCabecalho: true);
         }
 
-        else if (opcaoMenuPrincipal == "2")
+        if (telaSelecionada is TelaEmprestimo)
         {
-            opcaoMenuInterno = telaRevista.ObterOpcaoMenu();
+            TelaEmprestimo telaEmprestimo = (TelaEmprestimo)telaSelecionada;
 
             if (opcaoMenuInterno == "S")
             {
                 Console.Clear();
                 break;
             }
-
-            if (opcaoMenuInterno == "1")
-                telaRevista.Cadastrar();
-
-            else if (opcaoMenuInterno == "2")
-                telaRevista.Editar();
-
-            else if (opcaoMenuInterno == "3")
-                telaRevista.Excluir();
-
-            else if (opcaoMenuInterno == "4")
-                telaRevista.VisualizarTodos(deveExibirCabecalho: true);
-        }
-
-        else if (opcaoMenuPrincipal == "3")
-        {
-            opcaoMenuInterno = telaAmigo.ObterOpcaoMenu();
-
-            if (opcaoMenuInterno == "S")
-            {
-                Console.Clear();
-                break;
-            }
-
-            if (opcaoMenuInterno == "1")
-                telaAmigo.Cadastrar();
-
-            else if (opcaoMenuInterno == "2")
-                telaAmigo.Editar();
-
-            else if (opcaoMenuInterno == "3")
-                telaAmigo.Excluir();
-
-            else if (opcaoMenuInterno == "4")
-                telaAmigo.VisualizarTodos(deveExibirCabecalho: true);
-        }
-
-        else if (opcaoMenuPrincipal == "4")
-        {
-            opcaoMenuInterno = telaEmprestimo.ObterOpcaoMenu();
-
-            if (opcaoMenuInterno == "S")
-            {
-                Console.Clear();
-                break;
-            }
-
             if (opcaoMenuInterno == "1")
                 telaEmprestimo.Abrir();
 
