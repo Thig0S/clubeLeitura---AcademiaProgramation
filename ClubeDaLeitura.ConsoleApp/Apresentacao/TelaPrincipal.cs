@@ -12,12 +12,14 @@ public class TelaPrincipal
     RepositorioRevista repositorioRevista;
     RepositorioAmigo repositorioAmigo;
     RepositorioEmprestimo repositorioEmprestimo;
+    RepositorioMulta RepositorioMulta;
 
     public TelaPrincipal(
         RepositorioCaixa repositorioCaixa,
         RepositorioRevista repositorioRevista,
         RepositorioAmigo repositorioAmigo,
-        RepositorioEmprestimo repositorioEmprestimo)
+        RepositorioEmprestimo repositorioEmprestimo,
+        RepositorioMulta repositorioMulta)
     {
         this.repositorioCaixa = repositorioCaixa;
         this.repositorioRevista = repositorioRevista;
@@ -34,11 +36,15 @@ public class TelaPrincipal
         Emprestimo emprestimo = new(revista, amigo);
         repositorioEmprestimo.Cadastrar(emprestimo);
         emprestimo.Abrir();
+        System.Console.WriteLine(emprestimo.Multa);
+        RepositorioMulta = repositorioMulta;
+
+        repositorioMulta.CadastrarMultas();
     }
 
     public ITela? ApresentarMenuOpcoesPrincipal()
     {
-        Console.Clear();
+        // Console.Clear();
         Console.WriteLine("---------------------------------");
         Console.WriteLine("Clube da Leitura");
         Console.WriteLine("---------------------------------");
@@ -46,6 +52,7 @@ public class TelaPrincipal
         Console.WriteLine("2 - Gerenciar revistas");
         Console.WriteLine("3 - Gerenciar amigos");
         Console.WriteLine("4 - Gerenciar empréstimos");
+        System.Console.WriteLine("5 - Gerenciar Multas");
         Console.WriteLine("S - Sair");
         Console.WriteLine("---------------------------------");
         Console.Write("> ");
@@ -61,7 +68,8 @@ public class TelaPrincipal
             return new TelaAmigo(repositorioAmigo);
         else if (opcaoMenuPrincipal == "4")
             return new TelaEmprestimo(repositorioEmprestimo, repositorioRevista, repositorioAmigo);
-
+        else if (opcaoMenuPrincipal == "5")
+            return new TelaMulta(RepositorioMulta);
         return null;
     }
 }

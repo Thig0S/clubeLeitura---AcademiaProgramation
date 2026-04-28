@@ -39,7 +39,6 @@ public class TelaEmprestimo : ITela
     public void Abrir()
     {
         //logica de abertura de cadastro de emprestimo
-
         //1. obter os dados obrigatorios revista e amigo
         Emprestimo emprestimo = ObterDadosCadastrais();
         //2. validar o emprestimo

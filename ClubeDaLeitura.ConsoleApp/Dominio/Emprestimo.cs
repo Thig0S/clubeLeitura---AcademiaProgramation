@@ -9,6 +9,7 @@ public class Emprestimo
     public string Id { get; set; } = string.Empty; // propriedade
     public Revista Revista { get; set; }
     public Amigo Amigo { get; set; }
+    public Multa? Multa { get; private set; }
     public DateTime Abertura { get; set; }
     public DateTime ConclusaoPrevista
     {
@@ -27,6 +28,15 @@ public class Emprestimo
         {
             return Status == StatusEmprestimo.Aberto && DateTime.Now > ConclusaoPrevista;
         }
+    }
+    public bool GerarMultaSeNecessario()
+    {
+        if (EstaAtrasado && Multa == null)
+        {
+            Multa = new Multa(this);
+            return true;
+        }
+        return false;
     }
     public StatusEmprestimo Status { get; set; } = StatusEmprestimo.Indefinido;
     public Emprestimo(Revista revista, Amigo amigo)
@@ -56,7 +66,9 @@ public class Emprestimo
 
     public void Abrir()
     {
-        Abertura = DateTime.Now;
+        // Abertura = DateTime.Now;
+        //Temporariamente cadastra emprestimos atrasados
+        Abertura = new DateTime(2026, 4, 20);
 
         Status = StatusEmprestimo.Aberto;
         Revista.Emprestar();
