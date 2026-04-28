@@ -17,7 +17,7 @@ public class TelaMulta : ITela
 
     public string? ObterOpcaoMenu()
     {
-        // Console.Clear();
+        Console.Clear();
         Console.WriteLine("---------------------------------");
         Console.WriteLine($"Gestão de emprestimo");
         Console.WriteLine("---------------------------------");

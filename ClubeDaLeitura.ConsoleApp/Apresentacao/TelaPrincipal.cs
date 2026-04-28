@@ -44,7 +44,7 @@ public class TelaPrincipal
 
     public ITela? ApresentarMenuOpcoesPrincipal()
     {
-        // Console.Clear();
+        Console.Clear();
         Console.WriteLine("---------------------------------");
         Console.WriteLine("Clube da Leitura");
         Console.WriteLine("---------------------------------");
