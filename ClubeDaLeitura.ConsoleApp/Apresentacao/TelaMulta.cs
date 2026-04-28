@@ -34,7 +34,40 @@ public class TelaMulta : ITela
 
     internal void Quitar()
     {
-        throw new NotImplementedException();
+        VisualizarTodos(deveExibirCabecalho: false);
+
+        string? idSelecionado;
+
+        do
+        {
+            Console.Write("Digite o ID da Multa para quitar : ");
+            idSelecionado = Console.ReadLine();
+
+            if (!string.IsNullOrWhiteSpace(idSelecionado) && idSelecionado.Length == 7)
+                break;
+        } while (true);
+
+        Multa multaSelecionada = (Multa)repositorioMulta.SelecionarPorId(idSelecionado);
+
+        if (multaSelecionada == null)
+        {
+            ExibirMensagem("ID da Multa não encontrado, tente novamente.");
+            return;
+        }
+
+        System.Console.Write("Deseja pagar a multa do amigo " + multaSelecionada.emprestimo.Amigo.Nome + " no valor de R$" + multaSelecionada.Valor + "? (S/N) ");
+        string? resposta = Console.ReadLine()?.ToUpper();
+        if (resposta == "S")
+        {
+            multaSelecionada.Status = StatusMulta.Quitado;
+            ExibirMensagem("Multa paga com sucesso!");
+            repositorioMulta.Excluir(idSelecionado);
+        }
+        else
+        {
+            ExibirMensagem("Operação cancelada.");
+        }
+
     }
     public void VisualizarTodos(bool deveExibirCabecalho)
     {
@@ -56,7 +89,7 @@ public class TelaMulta : ITela
                 continue;
             Console.WriteLine(
                 "{0, -7} | {1, -15} | {2, -15} | {3, -13}",
-                a.Id, a.emprestimo.Amigo.Nome, a.emprestimo.Revista.Titulo, "R$" +a.Valor
+                a.Id, a.emprestimo.Amigo.Nome, a.emprestimo.Revista.Titulo, "R$" + a.Valor
             );
         }
 

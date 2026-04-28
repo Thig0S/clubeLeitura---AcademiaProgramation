@@ -11,7 +11,6 @@ public enum StatusMulta
 }
 public class Multa : EntidadeBase
 {
-    public string Id;
     public Emprestimo emprestimo;
     public StatusMulta Status = StatusMulta.Pendente;
     public int Valor
@@ -22,13 +21,8 @@ public class Multa : EntidadeBase
         }
     }
 
-
-    public Multa(Emprestimo emprestimo)
+    public Multa(Emprestimo emprestimo) : base()
     {
-        Id = Convert
-                .ToHexString(RandomNumberGenerator.GetBytes(20))
-                .ToLower()
-                .Substring(0, 7);
         this.emprestimo = emprestimo;
     }
 
