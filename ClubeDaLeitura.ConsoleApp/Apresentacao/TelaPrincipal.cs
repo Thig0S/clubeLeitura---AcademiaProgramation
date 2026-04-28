@@ -67,7 +67,7 @@ public class TelaPrincipal
         else if (opcaoMenuPrincipal == "3")
             return new TelaAmigo(repositorioAmigo);
         else if (opcaoMenuPrincipal == "4")
-            return new TelaEmprestimo(repositorioEmprestimo, repositorioRevista, repositorioAmigo);
+            return new TelaEmprestimo(repositorioEmprestimo, repositorioRevista, repositorioAmigo, RepositorioMulta);
         else if (opcaoMenuPrincipal == "5")
             return new TelaMulta(RepositorioMulta);
         return null;

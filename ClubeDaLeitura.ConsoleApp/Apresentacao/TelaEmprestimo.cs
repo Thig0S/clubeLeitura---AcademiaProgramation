@@ -11,12 +11,13 @@ public class TelaEmprestimo : ITela
     private RepositorioEmprestimo repositorioEmprestimo;
     private RepositorioRevista repositorioRevista;
     private RepositorioAmigo RepositorioAmigo;
-
-    public TelaEmprestimo(RepositorioEmprestimo repositorioEmprestimo, RepositorioRevista repositorioRevista, RepositorioAmigo repositorioAmigo)
+    private RepositorioMulta repositorioMulta;
+    public TelaEmprestimo(RepositorioEmprestimo repositorioEmprestimo, RepositorioRevista repositorioRevista, RepositorioAmigo repositorioAmigo, RepositorioMulta repositorioMulta)
     {
         this.repositorioEmprestimo = repositorioEmprestimo;
         this.repositorioRevista = repositorioRevista;
         RepositorioAmigo = repositorioAmigo;
+        this.repositorioMulta = repositorioMulta;
     }
 
     public string ObterOpcaoMenu()
@@ -42,6 +43,12 @@ public class TelaEmprestimo : ITela
         //1. obter os dados obrigatorios revista e amigo
         Emprestimo emprestimo = ObterDadosCadastrais();
         //2. validar o emprestimo
+
+        if (!repositorioMulta.VerificarMultaAmigo(emprestimo.Amigo.Nome))
+        {
+            ExibirMensagem("O amigo " + emprestimo.Amigo.Nome + " possui uma multa pendente. Por favor, quite a multa para realizar um novo empréstimo.");
+            return;
+        }
         string[] erros = emprestimo.Validar();
 
 
@@ -67,6 +74,8 @@ public class TelaEmprestimo : ITela
 
         //4. armazenar essa porra
         repositorioEmprestimo.Cadastrar(emprestimo);
+
+        ExibirMensagem($"O emprestimo {emprestimo.Id} foi aberto com sucesso!");
     }
 
     public void Concluir()

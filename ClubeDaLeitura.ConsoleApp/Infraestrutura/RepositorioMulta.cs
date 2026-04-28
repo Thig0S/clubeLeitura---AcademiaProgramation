@@ -31,6 +31,23 @@ public class RepositorioMulta : RepositorioBase
         }
     }
 
+    internal bool VerificarMultaAmigo(string nome)
+    {
+        for (int i = 0; i < registros.Length; i++)
+        {
+            Multa? multa = (Multa?)registros[i];
+
+            if (multa == null)
+                continue;
+
+            if (multa.emprestimo.Amigo.Nome == nome && multa.Status == StatusMulta.Pendente)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
     internal EntidadeBase?[] VisualizarTodos()
     {
         return registros;
